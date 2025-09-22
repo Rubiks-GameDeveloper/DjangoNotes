@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import password_view
+from . import views
+
+app_name = 'notes'
 
 urlpatterns = [
-    path('', password_view, name='password_view'),
+    path('', views.notes_view, name='notes'),
+    path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
 ]

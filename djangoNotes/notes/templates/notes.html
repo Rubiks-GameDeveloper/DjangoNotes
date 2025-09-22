@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заметки</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="{{ theme }}-theme">
+
+    <header>
+        <h1>Мои заметки</h1>
+        <form method="post" action="{% url 'notes:toggle_theme' %}">
+            {% csrf_token %}
+            <button type="submit" name="theme" value="{% if theme == 'light' %}dark{% else %}light{% endif %}" class="theme-button">
+                Переключить тему
+            </button>
+        </form>
+    </header>
+
+    <main>
+        <div class="note">
+            <h2>Заметка 1</h2>
+            <p>Сделать лабораторную работу по Языкам и средам разработки Интернет ресурсов</p>
+        </div>
+        <div class="note">
+            <h2>Заметка 2</h2>
+            <p>Проверить плиту перед сном</p>
+        </div>
+        <div class="note">
+            <h2>Заметка 3</h2>
+            <p>Приготовить покушать и купить продуктов</p>
+        </div>
+    </main>
+
+</body>
+</html>

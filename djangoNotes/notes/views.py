@@ -1,13 +1,35 @@
 from django.shortcuts import render
-from .forms import PasswordForm
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
-def password_view(request):
+def notes_view(request):
+    theme = request.COOKIES.get('theme', 'light')
+
+    if theme not in ['light', 'dark']:
+        theme = 'light'
+
+    response = render(request, 'notes.html', {'theme': theme})
+    return response
+
+
+def toggle_theme(request):
     if request.method == 'POST':
-        form = PasswordForm(request.POST)
-        if form.is_valid():
-            # Здесь можно обработать валидный пароль
-            return render(request, 'notes/success.html')
-    else:
-        form = PasswordForm()
-    return render(request, 'notes/password_form.html', {'form': form})
+        new_theme = request.POST.get('theme', 'light')
+
+        if new_theme in ['light', 'dark']:
+            theme = new_theme
+        else:
+            theme = 'light'
+
+        response = HttpResponseRedirect(reverse('notes:notes'))
+
+        response.set_cookie('theme', theme, max_age=30 * 24 * 3600)
+
+        return response
+
+    response = HttpResponseRedirect(reverse('notes:notes'))
+
+    if 'theme' not in request.COOKIES:
+        response.set_cookie('theme', 'light', max_age=30 * 24 * 3600)
+    return response
