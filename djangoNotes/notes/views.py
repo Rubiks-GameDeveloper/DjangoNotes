@@ -23,13 +23,7 @@ def toggle_theme(request):
             theme = 'light'
 
         response = HttpResponseRedirect(reverse('notes:notes'))
-
         response.set_cookie('theme', theme, max_age=30 * 24 * 3600)
-
         return response
 
-    response = HttpResponseRedirect(reverse('notes:notes'))
-
-    if 'theme' not in request.COOKIES:
-        response.set_cookie('theme', 'light', max_age=30 * 24 * 3600)
-    return response
+    return HttpResponseRedirect(reverse('notes:notes'))

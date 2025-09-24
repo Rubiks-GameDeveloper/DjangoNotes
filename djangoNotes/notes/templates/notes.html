@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body class="{{ theme }}-theme">
-
     <header>
-        <h1>Мои заметки</h1>
+        <h1>
+            <img src="{% static 'images/notesIcon.png' %}" alt="Иконка заметок" class="header-icon" style="height: 35px; width: 35px; padding: 4px;">
+            Мои заметки
+        </h1>
         <form method="post" action="{% url 'notes:toggle_theme' %}">
             {% csrf_token %}
             <button type="submit" name="theme" value="{% if theme == 'light' %}dark{% else %}light{% endif %}" class="theme-button">
